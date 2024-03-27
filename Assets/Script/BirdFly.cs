@@ -6,8 +6,10 @@ public class NewBehaviourScript : MonoBehaviour
 {
     public Rigidbody2D rigidbody2D;
     // Start is called before the first frame update
+    public Animator animator;
     void Start()
     {
+        animator.SetInteger("state", 1);
         //we could edit the objects transform data automatically 
         // new Vector3 is to create a new position coordinates
         //transform.position = new Vector3(0, transform.position.y + 0.02f, 0);
