@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class NewBehaviourScript : MonoBehaviour
     public Rigidbody2D rigidbody2D;
     // Start is called before the first frame update
     public Animator animator;
+    public StaticUIManage manager;
     void Start()
     {
         animator.SetInteger("state", 1);
@@ -23,12 +25,25 @@ public class NewBehaviourScript : MonoBehaviour
         //Input.GetMouseButton(0) 
         // Input.GetMouseButtonDown(0) is method for only one click
         //GetComponent is to get this.Object's other component
-        if ((Input.GetMouseButtonDown(0)))
+        if (Input.GetMouseButtonDown(0)&& manager.startGame)
         {
             // We could get the component by using unity
             //Rigidbody2D rigidbody2D = this.GetComponent<Rigidbody2D>();
             //this is change the instantenous velocity to 4m/s upward
             rigidbody2D.velocity = new Vector2(0, 4);
+        }
+    }
+    public void changeState(Boolean isFly)
+    {
+        if (isFly)
+        {
+            animator.SetInteger("state", 0);
+            rigidbody2D.simulated = true;
+        }
+        else
+        {
+            animator.SetInteger("state", 1);
+            rigidbody2D.simulated= false;
         }
     }
 }
