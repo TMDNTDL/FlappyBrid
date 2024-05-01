@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class NewBehaviourScript : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class NewBehaviourScript : MonoBehaviour
     // Start is called before the first frame update
     public Animator animator;
     public StaticUIManage manager;
+    public float dynamic = 4f;
+    public Transform birdImgRotate;
+    public float birdSpeed = 5f;
+    public float rotateTime = 0.3f;
+ 
     void Start()
     {
         animator.SetInteger("state", 1);
@@ -30,20 +36,26 @@ public class NewBehaviourScript : MonoBehaviour
             // We could get the component by using unity
             //Rigidbody2D rigidbody2D = this.GetComponent<Rigidbody2D>();
             //this is change the instantenous velocity to 4m/s upward
-            rigidbody2D.velocity = new Vector2(0, 4);
+            Fly();
         }
+        birdImgRotate.DORotateQuaternion(Quaternion.Euler(0, 0, rigidbody2D.velocity.y * dynamic), rotateTime);
+        /*birdImgRotate.transform.rotation = Quaternion.Euler(0,0,rigidbody2D.velocity.y * dynamic);*/
     }
-    public void changeState(Boolean isFly)
+    public void Fly()
+    {
+        rigidbody2D.velocity = new Vector2(0, birdSpeed);
+    }
+    public void changeState(Boolean isFly, Boolean isSimulated)
     {
         if (isFly)
         {
             animator.SetInteger("state", 0);
-            rigidbody2D.simulated = true;
+            rigidbody2D.simulated = isSimulated;
         }
         else
         {
             animator.SetInteger("state", 1);
-            rigidbody2D.simulated= false;
+            rigidbody2D.simulated= isSimulated;
         }
     }
 }
